@@ -1,0 +1,19 @@
+@import "../global_vars.css";
+
+
+.serie_number {
+    width: 20%;
+}
+
+.release_date, .serie_download {
+    width: 1%;
+}
+
+.serie_download_icon {
+    width: 20px;
+    background-color: var(--download-color);
+    padding: 4px;
+    border-radius: 3px;
+    cursor: pointer;
+    vertical-align: middle;
+}

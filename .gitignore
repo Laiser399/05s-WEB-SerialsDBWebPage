@@ -1,0 +1,67 @@
+/node_modules
+
+
+
+
+
+# dependencies
+/serials-page/node_modules
+/serials-page/.pnp
+/serials-page/.pnp.js
+
+# testing
+/serials-page/coverage
+
+# production
+/serials-page/build
+
+# misc
+/serials-page/.DS_Store
+/serials-page/.env.local
+/serials-page/.env.development.local
+/serials-page/.env.test.local
+/serials-page/.env.production.local
+
+/serials-page/npm-debug.log*
+/serials-page/yarn-debug.log*
+/serials-page/yarn-error.log*
+
+
+
+
+
+
+# compiled output
+/serials-server/dist
+/serials-server/node_modules
+
+# Logs
+/serials-server/logs
+*.log
+/serials-server/npm-debug.log*
+/serials-server/yarn-debug.log*
+/serials-server/yarn-error.log*
+/serials-server/lerna-debug.log*
+
+# OS
+/serials-server/.DS_Store
+
+# Tests
+/serials-server/coverage
+/serials-server/.nyc_output
+
+# IDEs and editors
+/serials-server/.idea
+/serials-server/.project
+/serials-server/.classpath
+/serials-server/.c9/
+/serials-server/*.launch
+/serials-server/.settings/
+/serials-server/*.sublime-workspace
+
+# IDE - VSCode
+/serials-server/.vscode/*
+/serials-server/!.vscode/settings.json
+/serials-server/!.vscode/tasks.json
+/serials-server/!.vscode/launch.json
+/serials-server/!.vscode/extensions.json

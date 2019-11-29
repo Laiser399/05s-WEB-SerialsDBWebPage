@@ -1,0 +1,51 @@
+@import "../global_vars.css";
+
+#seasons-content {
+    /* max-width: var(--page-width); */
+    position: fixed;
+    max-width: var(--page-width);
+    /* width: var(--page-width); */
+    width: 100%;
+    bottom: -550px;
+    height: 600px;
+    background-color: var(--bg-color);
+    border-radius: 10px 10px 0 0;
+
+    transition: bottom .5s;
+}
+
+.deployed {
+    bottom: 0px !important;
+}
+
+.show_seasons_button {
+    width: fit-content;
+    margin: 10px auto;
+    cursor: pointer;
+}
+
+.angle_up {
+    margin: 4px 10px 0px 10px;
+    width: 20px;
+
+    transition: transform .5s;
+}
+
+.angle_rotated {
+    transform: rotate(180deg);
+}
+
+.season_content {
+    margin: 20px;
+    overflow-y: scroll;
+    height: 86%;
+}
+
+
+
+
+
+
+
+
+

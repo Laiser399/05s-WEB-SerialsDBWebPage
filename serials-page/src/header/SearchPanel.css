@@ -1,0 +1,12 @@
+.search_panel {
+    display: inline-block;
+    height: fit-content;
+    margin: 0 0 0 10px;
+    color: white;
+}
+
+.search_input {
+    padding: 3px;
+    border-radius: 5px;
+    outline: none;
+}

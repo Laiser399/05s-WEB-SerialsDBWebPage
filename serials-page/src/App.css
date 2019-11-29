@@ -1,0 +1,37 @@
+@import "./global_vars.css";
+
+body {
+    margin: 0;
+    cursor: default;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+}
+
+.main_container {
+    max-width: var(--page-width);
+
+    width: auto;
+    /* width: 100vh; */
+    margin: 0 auto;
+    min-height: 100vh;
+    box-shadow: inset 12px 0px 12px -12px var(--bg-color),
+        inset -12px 0px 12px -12px var(--bg-color);
+}
+
+header {
+    position: sticky;
+    top: 0;
+    max-width: 1180px;
+    width: auto;
+    
+    padding: 10px;
+    align-items: center;
+
+    background-color: var(--bg-color);
+    border-radius: 0px 0px 10px 10px;
+    box-shadow: 0px 12px 15px -6px var(--bg-color);
+    z-index: 1000;
+
+    display: flex;
+    justify-content: space-between;
+}

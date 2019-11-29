@@ -1,0 +1,73 @@
+@import "../global_vars.css";
+
+
+.display-appear {
+    opacity: 0.01;
+}
+
+.display-appear.display-appear-active {
+    opacity: 1;
+    transition: opacity 0.5s;
+}
+
+
+
+
+
+
+
+.season {
+    background-color: #fff;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+
+    box-shadow: inset 0 0 8px black;
+
+    transition: display .5s;
+}
+
+.season_hide {
+    display: none !important;
+}
+
+.season_panel {
+    width: initial;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.left {
+    width: fit-content;
+    display: inline-block;
+}
+
+.season_number {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.download_season {
+    margin-right: 7px;
+    background-color: var(--download-color);
+    width: 20px;
+    height: 20px;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.series_table {
+    /* width: -webkit-fill-available; */
+    width: 100%;
+}
+
+.series_table td {
+    padding: 6px;
+    background-color: #d1d4d8;
+}
+
+
+
+

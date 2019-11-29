@@ -1,0 +1,69 @@
+@import "../global_vars.css";
+
+
+.serial_container {
+    display: inline-block;
+    max-width: 340px;
+    height: fit-content;
+    width: 100%;
+    margin: 8px 20px;
+    padding: 8px;
+    border-radius: 6px;
+    box-shadow: 0px 6px 14px var(--bg-color);
+    vertical-align: top;
+}
+
+.serial_data {
+    max-width: 280px;
+    width: 100%;
+    display: inline-block;
+}
+
+.serial_name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* overflow-wrap: break-word; */
+    font-size: 22px;
+    width: 100%;
+    margin-bottom: 12px;
+    cursor: pointer;
+}
+
+.genres {
+    /* height: 34px; */
+    display: block;
+    word-wrap: normal;
+    color: gray;
+    font-size: 14px;
+    margin-bottom: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.off_site {
+    display: block;
+    word-wrap: break-word;
+
+    background-color: rgb(219, 219, 219);
+    width: fit-content;
+    padding: 2px 6px;
+    border-radius: 3px;
+    text-decoration: none;
+    color: black;
+}
+
+.mark {
+    /* width: 20px; */
+    margin: 5px 0px 5px 5px;
+    padding: 4px 8px;
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+
+    border: 3.5px solid #00D254;
+    border-radius: 5px;
+    background-color: #00D254;
+}
