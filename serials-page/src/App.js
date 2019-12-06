@@ -6,6 +6,7 @@ import SeasonsContainer from "./SeasonsContainer/SeasonsContainer";
 import SearchPanel from "./header/SearchPanel";
 import PagePanel from "./header/PagePanel";
 import SortPanel from "./header/SortPanel";
+import RecentAddedSeries from "./RecentAddedSeries/RecentAddedSeries";
 
 
 export default class App extends React.Component {
@@ -32,6 +33,7 @@ export default class App extends React.Component {
 
   componentDidMount() {
     this.initSerials();
+    this.initLastAddedSeries();
   }
 
   async initSerials() {
@@ -58,6 +60,24 @@ export default class App extends React.Component {
       }
       else {
         alert("Error downloading serials data.")
+      }
+    };
+    req.send();
+  }
+
+  async initLastAddedSeries() {
+    let req = new XMLHttpRequest();
+    req.open("GET", "/api/get-last-added-series", true);
+    req.onload = (e) => {
+      if (req.status === 200) {
+        let seriesArr = JSON.parse(req.responseText);
+        seriesArr.forEach(serie => serie.releaseDate = new Date(serie.releaseDate));
+        this.setState({
+          lastAddedSeries: seriesArr
+        });
+      }
+      else {
+        console.log("Error downloading last added series.");
       }
     };
     req.send();
@@ -140,6 +160,8 @@ export default class App extends React.Component {
 
   // render
   render() {
+    let lastAddedSeries = this.state.lastAddedSeries;
+
     let start = (this.state.currentPage - 1) * this.SERIALS_PER_PAGE;
     let end = start + this.SERIALS_PER_PAGE;
 
@@ -149,6 +171,7 @@ export default class App extends React.Component {
     let needShowSeasons = this.needShowSeasons;
     this.needShowSeasons = false;
     
+
     return (
       <div className="main_container">
         <header>
@@ -158,7 +181,8 @@ export default class App extends React.Component {
             onPageSelected={this.onPageSelected}/>
           <SortPanel onSortChanged={this.onSortChanged}/>
         </header>
-        <SpaceBlock height="16px"/>
+        
+        <RecentAddedSeries series={lastAddedSeries} onSerialClick={this.onSerialClick}/>
         {serialsList}
         <SpaceBlock height="54px"/>
         <SeasonsContainer idSerial={this.state.selectedIdSerial} needShowSeasons={needShowSeasons}/>

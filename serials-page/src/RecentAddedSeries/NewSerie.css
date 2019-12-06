@@ -1,0 +1,49 @@
+
+.new_serie_container {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 auto;
+
+    position: relative;
+    /* max-width: 240px;
+    width: 100%; */
+    max-height: 114px;
+    background-color: white;
+    margin: 10px;
+    border-radius: 4px;
+
+    cursor: pointer;
+
+    transition: background-color .5s;
+}
+
+.new_serie_container:hover {
+    background-color: #F98866;
+}
+
+.upper {
+    flex: 1;
+    max-width: 300px;
+    margin: 0px 6px 6px 6px;
+    font-size: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.under {
+    display: flex;
+    justify-content: space-between;
+    margin: 0px 6px 6px 6px;
+}
+
+.new_serie_number {
+    display: inline-block;
+    margin-right: px;
+}
+
+.new_serie_date {
+    display: inline-block;
+    max-width: 100px;
+
+    
+}

@@ -20,6 +20,11 @@ export class AppController {
     res.status(HttpStatus.OK).json(this.appService.getSeries(+idSeason));
   }
 
+  @Get("/api/get-last-added-series")
+  getLastAddedSeries(@Res() res) {
+    res.status(HttpStatus.OK).json(this.appService.getLastAddedSeries());
+  }
+
   @Get("/test")
   test(@Res() res) {
     res.set("aga", "zdoh?");

@@ -9,6 +9,7 @@ body {
 
 .main_container {
     max-width: var(--page-width);
+    min-width: var(--min-page-width);
 
     width: auto;
     /* width: 100vh; */
@@ -19,12 +20,13 @@ body {
 }
 
 header {
-    position: sticky;
-    top: 0;
-    max-width: 1180px;
-    width: auto;
+    position: fixed;
+    top: 0vh;
+    max-width: var(--page-width);
+    min-width: var(--min-page-width);
+    width: 100%;
     
-    padding: 10px;
+    /* padding: 10px; */
     align-items: center;
 
     background-color: var(--bg-color);
@@ -35,3 +37,9 @@ header {
     display: flex;
     justify-content: space-between;
 }
+
+
+
+
+
+

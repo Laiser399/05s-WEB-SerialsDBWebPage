@@ -1,0 +1,16 @@
+@import "../global_vars.css";
+
+
+.new_series_container {
+    background-color: var(--bg-color);
+    padding: 1px;
+}
+
+
+
+.new_series_list {
+    display: flex;
+    white-space: nowrap;
+    overflow-x: scroll;
+    margin: 0px 10px 10px 10px;
+}

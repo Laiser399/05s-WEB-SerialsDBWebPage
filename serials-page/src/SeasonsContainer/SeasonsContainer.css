@@ -1,12 +1,12 @@
 @import "../global_vars.css";
 
 #seasons-content {
-    /* max-width: var(--page-width); */
     position: fixed;
     max-width: var(--page-width);
-    /* width: var(--page-width); */
+    min-width: var(--min-page-width);
     width: 100%;
     bottom: -550px;
+    max-height: 80vh;
     height: 600px;
     background-color: var(--bg-color);
     border-radius: 10px 10px 0 0;

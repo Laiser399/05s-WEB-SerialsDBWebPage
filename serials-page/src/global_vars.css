@@ -1,5 +1,6 @@
 :root {
     --bg-color: #282C34;
     --page-width: 1200px;
+    --min-page-width: 810px;
     --download-color: #FF3622;
 }

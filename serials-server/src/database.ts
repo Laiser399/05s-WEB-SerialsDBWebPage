@@ -7,6 +7,7 @@ import { Serial } from "./records/serial";
 import { Season } from "./records/season";
 import { Serie } from "./records/serie";
 import { Genre } from "./records/genre";
+import { LastAddedSerie } from "./records/LastAddedSerie";
 
 export class Database {
     private host: string = "localhost";
@@ -26,6 +27,8 @@ export class Database {
     private serials: SerialsContainer = new SerialsContainer();
     private seasons: SeasonsContainer = new SeasonsContainer();
     private series: SeriesContainer = new SeriesContainer();
+    private lastAddedSeries: Array<LastAddedSerie> = new Array();
+
 
     constructor() {
         this.connection.connect((err) => {
@@ -34,19 +37,99 @@ export class Database {
             }
         });
 
-        this.initLastChangeId();
-        this.checkChanges = this.checkChanges.bind(this);
-        setInterval(this.checkChanges, 1000);
-
         this.initGenres();
         this.initSerials();
         this.initSeasons();
         this.initSeries();
+
+        this.initLastChangeId();
+        this.checkChanges = this.checkChanges.bind(this);
+        setInterval(this.checkChanges, 1000);
+    }
+
+    // inits
+    private initGenres(): void {
+        this.connection.execute("CALL get_all_genres();", (err, res) => {
+            if (err) {
+                console.log(`Error receive genres from db: ${err}`);
+                return;
+            }
+            res[0].forEach(row => {
+                this.genres.addOrUpdate(row.id, row.name);
+            });
+        });
+    }
+
+    private initSerials(): void {
+        this.connection.execute("CALL get_all_serials();", (err, res) => {
+            if (err) {
+                console.log(`Error receive serials from db: ${err}`);
+                return;
+            }
+            res[0].forEach(row => {
+                this.serials.addOrUpdate(row.id, row.name, row.official_site, row.mark);
+                this.initGenresForSerial(row.id);
+            });
+        });
+    }
+
+    private initGenresForSerial(idSerial: number): void {
+        this.connection.execute(`CALL get_genres_id_for(${idSerial});`, (err, res) => {
+            if (err) {
+                console.log(`Error receive genres for serial with id ${idSerial}: ${err}`);
+                return;
+            }
+            let serial: Serial = this.serials.getSerial(idSerial);
+            res[0].forEach(row => {
+                let genre: Genre = this.genres.getGenre(row.id_genre);
+                serial.addGenre(genre);
+            });
+        });
+    }
+
+    private initSeasons(): void {
+        this.connection.execute("CALL get_all_seasons();", (err, res) => {
+            if (err) {
+                console.log(`Error receive seasons from db: ${err}`);
+                return;
+            }
+            res[0].forEach(row => {
+                this.seasons.addOrUpdate(row.id, row.id_serial, row.number, row.series_count, 
+                    row.torrent_link);
+            });
+        });
+    }
+
+    private initSeries(): void {
+        this.connection.execute("CALL get_all_series();", (err, res) => {
+            if (err) {
+                console.log(`Error receive series from db: ${err}`);
+                return;
+            }
+
+            res[0].forEach(row => {
+               this.series.addOrUpdate(row.id, row.id_season, row.number, row.name,
+                    row.release_date, row.torrent_link);
+            });
+        });
+    }
+
+    // check updates
+    private initLastChangeId() {
+        this.connection.execute("CALL get_last_change_ids();", (err, res) => {
+            if (err) {
+                console.log(`Error receive change ids: ${err}`);
+                return;
+            }
+            this.lastChangeId = res[0][0].id_main;
+            this.lastStgChangeId = res[0][0].id_stg;
+        });
     }
 
     private checkChanges() {
         this.checkMainChanges();
         this.checkStgChanges();
+        this.checkLastAddedSeries();
     }
 
     private checkMainChanges() {
@@ -178,83 +261,21 @@ export class Database {
         });
     }
 
-    private initLastChangeId() {
-        this.connection.execute("CALL get_last_change_ids();", (err, res) => {
+    private checkLastAddedSeries(): void {
+        this.connection.execute("SELECT * from last_added_series;", (err, res) => {
             if (err) {
-                console.log(`Error receive change ids: ${err}`);
+                console.log(`Error receive last added series: ${err}.`);
                 return;
             }
-            this.lastChangeId = res[0][0].id_main;
-            this.lastStgChangeId = res[0][0].id_stg;
-        });
-    }
 
-    private initGenres(): void {
-        this.connection.execute("CALL get_all_genres();", (err, res) => {
-            if (err) {
-                console.log(`Error receive genres from db: ${err}`);
-                return;
-            }
-            res[0].forEach(row => {
-                this.genres.addOrUpdate(row.id, row.name);
+            this.lastAddedSeries = res.map(row => {
+                return new LastAddedSerie(row.id_serial, row.serial_name, 
+                    row.season_number, row.series_number, row.release_date);
             });
         });
     }
 
-    private initSerials(): void {
-        this.connection.execute("CALL get_all_serials();", (err, res) => {
-            if (err) {
-                console.log(`Error receive serials from db: ${err}`);
-                return;
-            }
-            res[0].forEach(row => {
-                this.serials.addOrUpdate(row.id, row.name, row.official_site, row.mark);
-                this.initGenresForSerial(row.id);
-            });
-        });
-    }
-
-    private initSeasons(): void {
-        this.connection.execute("CALL get_all_seasons();", (err, res) => {
-            if (err) {
-                console.log(`Error receive seasons from db: ${err}`);
-                return;
-            }
-            res[0].forEach(row => {
-                this.seasons.addOrUpdate(row.id, row.id_serial, row.number, row.series_count, 
-                    row.torrent_link);
-            });
-        });
-    }
-
-    private initSeries(): void {
-        this.connection.execute("CALL get_all_series();", (err, res) => {
-            if (err) {
-                console.log(`Error receive series from db: ${err}`);
-                return;
-            }
-
-            res[0].forEach(row => {
-               this.series.addOrUpdate(row.id, row.id_season, row.number, row.name,
-                    row.release_date, row.torrent_link);
-            });
-        });
-    }
-
-    private initGenresForSerial(idSerial: number): void {
-        this.connection.execute(`CALL get_genres_id_for(${idSerial});`, (err, res) => {
-            if (err) {
-                console.log(`Error receive genres for serial with id ${idSerial}: ${err}`);
-                return;
-            }
-            let serial: Serial = this.serials.getSerial(idSerial);
-            res[0].forEach(row => {
-                let genre: Genre = this.genres.getGenre(row.id_genre);
-                serial.addGenre(genre);
-            });
-        });
-    }
-
+    // some methods
     public isExistsSerial(id: number): boolean {
         return this.serials.isExists(id);
     }
@@ -263,6 +284,7 @@ export class Database {
         return this.seasons.isExists(id);
     }
 
+    // getters
     public getSerials(): Array<Serial> {
         return this.serials.getSerials();
     }
@@ -273,6 +295,10 @@ export class Database {
 
     public getSeries(idSeason: number): Set<Serie> {
         return this.series.getSeries(idSeason);
+    }
+
+    public getLastAddedSeries(): Array<LastAddedSerie> {
+        return this.lastAddedSeries;
     }
 
 

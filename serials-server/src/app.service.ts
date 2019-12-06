@@ -3,6 +3,7 @@ import { Database } from "./database";
 import { Serial } from "./records/serial";
 import { Season } from "./records/season";
 import { Serie } from "./records/serie";
+import { LastAddedSerie } from "./records/LastAddedSerie";
 
 @Injectable()
 export class AppService {
@@ -32,5 +33,9 @@ export class AppService {
     else {
       return [];
     }
+  }
+
+  public getLastAddedSeries(): Array<LastAddedSerie> {
+    return this.database.getLastAddedSeries();
   }
 }

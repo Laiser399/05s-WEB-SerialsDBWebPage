@@ -1,7 +1,7 @@
 .search_panel {
     display: inline-block;
     height: fit-content;
-    margin: 0 0 0 10px;
+    margin: 10px 10px 10px 20px;
     color: white;
 }
 
