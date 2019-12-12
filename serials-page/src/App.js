@@ -10,7 +10,7 @@ import RecentAddedSeries from "./RecentAddedSeries/RecentAddedSeries";
 
 
 export default class App extends React.Component {
-  SERIALS_PER_PAGE = 21;
+  SERIALS_PER_PAGE = 24;
 
   
   constructor(props) {

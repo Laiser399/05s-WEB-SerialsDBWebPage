@@ -25,11 +25,6 @@ export class AppController {
     res.status(HttpStatus.OK).json(this.appService.getLastAddedSeries());
   }
 
-  @Get("/test")
-  test(@Res() res) {
-    res.set("aga", "zdoh?");
-    res.send("q");
-  }
 
   
 }
